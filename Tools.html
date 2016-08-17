@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style class="cp-pen-styles">
+h2 {color:#b3b3b3;}
+section {position:relative;width:50%;float:left;}
+#resetTextFrom {position:absolute; left:10px;top:5px;}
+textarea {width:300px; height:100px;display:block;margin:0 10px 10px;padding-top:30px;}
+textarea#text_from2 {display:none;}
+div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
+input {margin-left:10px;}
+span.vsego { color: #777; font-size: 0.7em; position: relative; top: -25px; left: 320px; }
+span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
+</style>
+</head>
+<body>
+<section>
+<input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
+<textarea id="text_from" ></textarea> <span id="vsego1" class="vsego"></span> <textarea id="text_from2" ></textarea>
+<div id="text_to"></div><span id="vsego2" class="vsego"></span>
+<input type="submit" id="" onclick="textToSmall();" value="To small case">
+<input type="submit" id="" onclick="unique();" value="Удалить повторы">
+</section>
+<section>
+<h2>Стоп-слова</h2>
+<div id="stopwords" onclick="selectText(this);">"продам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь", код товара, аптечная закупка, black mask, наш интернет магазин, journal="http://kosmetika-sale.livejournal.com/", "АПТЕЧНАЯ КОСМЕТИКА КЭЖ", journal="http://vk.com/club40225923", journal="http://vk.com/club77573685", journal="http://vk.com/club46867429", </div>
+
+<span class="comments">//todo:
+<ul><li>подключение стоп-слов на разные темы</li>
+<li>возможность добавления своих стоп-слов</li>
+<li>второе поле textarea для удаления из первого каких-то слов</li></ul>
+</span>
+</section>
+
+<script>
+textToSmall = function () {
+    var text_from = document.getElementById('text_from').value;
+    console.log(text_from.toLowerCase());
+    document.getElementById('text_to').innerHTML = text_from.toLowerCase();
+	return false;
+};
+
+document.getElementById('text_to').addEventListener('click', function() {
+    var r = document.createRange();
+    r.selectNode(this);
+    document.getSelection().addRange(r);
+});
+var selectText = function(n){
+	var r = document.createRange();
+	r.selectNode(n);
+	document.getSelection().addRange(r);
+}
+
+textReset = function(){
+	document.getElementById('text_from').value ="";
+	return false;
+}
+
+
+function unique() {
+	var text_from = document.getElementById('text_from').value;
+	var strings = text_from.split(',').sort();
+	var obj = {};
+	
+	document.getElementById('vsego1').innerHTML = strings.length;
+  for (var i = 0; i < strings.length; i++) {
+    var str = strings[i];
+    obj[str] = true; // запомнить строку в виде свойства объекта
+  }
+	
+    document.getElementById('text_to').innerHTML = Object.keys(obj);
+	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
+	//console.log(obj);
+	return false;
+}
+
+</script>
+</body></html>
