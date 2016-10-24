@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style class="cp-pen-styles">
-h2 {color:#b3b3b3;}
+h2, h3 {color:#b3b3b3;}
 section {position:relative;width:50%;float:left;}
 #resetTextFrom {position:absolute; left:10px;top:5px;}
 textarea {width:300px; height:100px;display:block;margin:0 10px 10px;padding-top:30px;}
@@ -20,13 +20,23 @@ span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-bl
 <section>
 <input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
 <textarea id="text_from" ></textarea> <span id="vsego1" class="vsego"></span> <textarea id="text_from2" ></textarea>
-<div id="text_to"></div><span id="vsego2" class="vsego"></span>
+<div id="text_to"><span id="text_to_span"></span></div><span id="vsego2" class="vsego"></span>
 <input type="submit" id="" onclick="textToSmall();" value="To small case">
 <input type="submit" id="" onclick="unique();" value="Удалить повторы">
+<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 </section>
 <section>
 <h2>Стоп-слова</h2>
-<div id="stopwords" onclick="selectText(this);">"продам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь", код товара, аптечная закупка, black mask, наш интернет магазин, journal="http://kosmetika-sale.livejournal.com/", "АПТЕЧНАЯ КОСМЕТИКА КЭЖ", journal="http://vk.com/club40225923", journal="http://vk.com/club77573685", journal="http://vk.com/club46867429", </div>
+<span id="stopwords" onclick="selectText(this);">"продам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь",  объявление на avito, промокод дня</span>
+
+<h3>Стоп-слова для косметики</h3>
+<span id="stopkosm" onclick="selectText(this);">код товара, аптечная закупка, black mask, наш интернет магазин, journal="http://kosmetika-sale.livejournal.com/", "АПТЕЧНАЯ КОСМЕТИКА КЭЖ", journal="http://vk.com/club40225923", journal="http://vk.com/club77573685", journal="http://vk.com/club46867429",</span>
+
+<h3>Стоп-слова для магазинов игрушек</h3>
+<span id="stoptoys" onclick="selectText(this);">"bit.ly", "cinema", "t.co", "Любимым деткам доставим радость", "заказать", "обменяю", "обменяюсь", "отдам", "отдаю", "поменяю", "поменяюсь", "предлагаю", "продам", "продаю", "р.", Convention Center, Movie, author="http://vk.com/club127154075", author="http://vk.com/club127154362", author="http://vk.com/club127154647", episode, journal="http://vk.com/club100428470", journal="http://vk.com/club108505287", journal="http://vk.com/club127154647", journal="http://vk.com/club51036509", lego_laso, season, server="http://ecoshopsforum.xyz/", server="http://shop-t.ru/", анимационный, анимация, артикул, бесплатно, в ассорт, в ассортименте, в наличии, вналичии, выкуп, грн, заказ, закуп, канал, капкейк, квартира NERF в России, кино*, конкурс, купон, мне понравилось видео, мульт*, наименование, начальная цена,  объявление на avito, озвучка, онлайн, оптовая закупка, орг сбор, отзыв, полный ассортимент, приз, призовой, прокат, промокод дня, режиссер, руб, сезон, секс, сериал*, серия, скачать, скидка, смотреть видео, сп, субтитры, сценарий, сценарист, титры, торент, торрент, торт, трейлер, фильм, цена обзор инструкция, цена по акции, фильм</span>
+
+<h3>Аренда</h3>
+<span id="arenda" onclick="selectText(this);">предпочтение некурящей, "сдам", "сдаю", "сниму", "сдается на длительный срок", комн квартира, комнатная, сдается на долгий срок, "сдаем", изолированная комната, двухкомнатная, однокомнатная, трехкомнатная, четырехкомнатная, "сдают", от собственника, сдается квартира, сдается комната, сдается студия, </span>
 
 <span class="comments">//todo:
 <ul><li>подключение стоп-слов на разные темы</li>
@@ -35,19 +45,23 @@ span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-bl
 </span>
 </section>
 
+
+минифигурки, фигурки, человечки, набор, наборчик, мининабор, мининаборчик, 
+
 <script>
+
 textToSmall = function () {
     var text_from = document.getElementById('text_from').value;
-    console.log(text_from.toLowerCase());
-    document.getElementById('text_to').innerHTML = text_from.toLowerCase();
+    document.getElementById('text_to_span').innerHTML = text_from.toLowerCase();
 	return false;
 };
 
-document.getElementById('text_to').addEventListener('click', function() {
+document.getElementById('text_to').addEventListener('click', function() { //выделение текста в диве text_to
     var r = document.createRange();
-    r.selectNode(this);
+    r.selectNode(document.getElementById('text_to_span'));
     document.getSelection().addRange(r);
 });
+
 var selectText = function(n){
 	var r = document.createRange();
 	r.selectNode(n);
@@ -59,19 +73,28 @@ textReset = function(){
 	return false;
 }
 
+//разбивает и сортирует по алфавиту, если нужна сортировка
+function tosort(n){ 
+	if(typeof n != "object"){ n = n.split(', ');}
+	if (document.getElementById('tosort').checked == true) 	{ n.sort();	}
+	return n;
+}
 
+//оставляет только уникальные слова
 function unique() {
 	var text_from = document.getElementById('text_from').value;
-	var strings = text_from.split(',').sort();
+	var strings = tosort(text_from);
 	var obj = {};
 	
 	document.getElementById('vsego1').innerHTML = strings.length;
-  for (var i = 0; i < strings.length; i++) {
-    var str = strings[i];
-    obj[str] = true; // запомнить строку в виде свойства объекта
-  }
-	
-    document.getElementById('text_to').innerHTML = Object.keys(obj);
+	  for (var i = 0; i < strings.length; i++) {
+		var str = strings[i];
+		obj[str] = true; // запомнить строку в виде свойства объекта //UPD: что это значит?! через пару недель уже даже комментарии прочитать не могу
+	  }
+	//надо бы превратить обратно в строку
+	var newstr = Object.keys(obj).join(", ");
+
+    document.getElementById('text_to_span').innerHTML = newstr;
 	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
 	//console.log(obj);
 	return false;
