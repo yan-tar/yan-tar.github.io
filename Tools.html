@@ -5,50 +5,54 @@
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style class="cp-pen-styles">
-h2, h3 {color:#b3b3b3;}
-section {position:relative;width:50%;float:left;}
-#resetTextFrom {position:absolute; left:10px;top:5px;}
-textarea {width:300px; height:100px;display:block;margin:0 10px 10px;padding-top:30px;}
-textarea#text_from2 {display:none;}
-div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
-input {margin-left:10px;}
-span.vsego { color: #777; font-size: 0.7em; position: relative; top: -25px; left: 320px; }
-span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
+	h2, h3 {color:#b3b3b3;}
+	section {position:relative;width:50%;float:left;}
+	#resetTextFrom {position:absolute; left:10px;top:5px;}
+	textarea {width:300px; height:100px;display:block;margin:0 10px 10px;padding-top:30px;}
+	/*#newfield {display:none;}*/
+	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
+	input {margin-left:10px;}
+	span.vsego { color: #777; font-size: 0.7em; position: relative; top: -25px; left: 320px; }
+	span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
+	.left {float:left;baseline:top;}
 </style>
 </head>
 <body>
 <section>
-<input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
-<textarea id="text_from" ></textarea> <span id="vsego1" class="vsego"></span> <textarea id="text_from2" ></textarea>
-<div id="text_to"><span id="text_to_span"></span></div><span id="vsego2" class="vsego"></span>
-<input type="submit" id="" onclick="textToSmall();" value="To small case">
-<input type="submit" id="" onclick="unique();" value="Удалить повторы">
-<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
+	<input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
+	<textarea id="text_from" class="left" ></textarea> <span id="vsego1" class="vsego"></span> 
+	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left">
+	<div class="left" id="newfield">
+		<textarea id="text_from2"></textarea>
+		<input type="submit" onclick="joinFields();" value="JOIN">
+	</div>
+	<br style="clear:both">
+	<div id="text_to">
+		<span id="text_to_span"></span>
+	</div>
+	<span id="vsego2" class="vsego"></span>
+	<input type="submit" id="" onclick="textToSmall();" value="To small case">
+	<input type="submit" id="" onclick="unique();" value="Удалить повторы">
+	<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 </section>
-<section>
-<h2>Стоп-слова</h2>
-<span id="stopwords" onclick="selectText(this);">"продам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь",  объявление на avito, промокод дня</span>
-
-<h3>Стоп-слова для косметики</h3>
-<span id="stopkosm" onclick="selectText(this);">код товара, аптечная закупка, black mask, наш интернет магазин, journal="http://kosmetika-sale.livejournal.com/", "АПТЕЧНАЯ КОСМЕТИКА КЭЖ", journal="http://vk.com/club40225923", journal="http://vk.com/club77573685", journal="http://vk.com/club46867429",</span>
-
-<h3>Стоп-слова для магазинов игрушек</h3>
-<span id="stoptoys" onclick="selectText(this);">"bit.ly", "cinema", "t.co", "Любимым деткам доставим радость", "заказать", "обменяю", "обменяюсь", "отдам", "отдаю", "поменяю", "поменяюсь", "предлагаю", "продам", "продаю", "р.", Convention Center, Movie, author="http://vk.com/club127154075", author="http://vk.com/club127154362", author="http://vk.com/club127154647", episode, journal="http://vk.com/club100428470", journal="http://vk.com/club108505287", journal="http://vk.com/club127154647", journal="http://vk.com/club51036509", lego_laso, season, server="http://ecoshopsforum.xyz/", server="http://shop-t.ru/", анимационный, анимация, артикул, бесплатно, в ассорт, в ассортименте, в наличии, вналичии, выкуп, грн, заказ, закуп, канал, капкейк, квартира NERF в России, кино*, конкурс, купон, мне понравилось видео, мульт*, наименование, начальная цена,  объявление на avito, озвучка, онлайн, оптовая закупка, орг сбор, отзыв, полный ассортимент, приз, призовой, прокат, промокод дня, режиссер, руб, сезон, секс, сериал*, серия, скачать, скидка, смотреть видео, сп, субтитры, сценарий, сценарист, титры, торент, торрент, торт, трейлер, фильм, цена обзор инструкция, цена по акции, фильм</span>
-
-<h3>Аренда</h3>
-<span id="arenda" onclick="selectText(this);">предпочтение некурящей, "сдам", "сдаю", "сниму", "сдается на длительный срок", комн квартира, комнатная, сдается на долгий срок, "сдаем", изолированная комната, двухкомнатная, однокомнатная, трехкомнатная, четырехкомнатная, "сдают", от собственника, сдается квартира, сдается комната, сдается студия, </span>
-
-<span class="comments">//todo:
-<ul><li>подключение стоп-слов на разные темы</li>
-<li>возможность добавления своих стоп-слов</li>
-<li>второе поле textarea для удаления из первого каких-то слов</li></ul>
-</span>
-</section>
-
-
-минифигурки, фигурки, человечки, набор, наборчик, мининабор, мининаборчик, 
-
 <script>
+var joinFields = function(){
+	var field1 = document.getElementById('text_from').value;
+	var field2 = document.getElementById('text_from2').value;
+	var strings1 = field1.split(', '); 
+	var strings2 = field2.split(', ');
+	var newString = [];
+	for (var i = 0; i < strings1.length; i++) {
+		for (var z = 0; z < strings2.length; z++)
+			{			
+			newString.push(strings1[i] + " " +strings2[z]);
+			};
+	  };
+	var vsego2 = newString.length;
+	newString.join();
+	document.getElementById('text_to_span').innerHTML = newString;
+	document.getElementById('vsego2').innerHTML = vsego2;
+}
 
 textToSmall = function () {
     var text_from = document.getElementById('text_from').value;
@@ -96,9 +100,39 @@ function unique() {
 
     document.getElementById('text_to_span').innerHTML = newstr;
 	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
-	//console.log(obj);
 	return false;
 }
 
+function showFrom2(){
+	document.getElementById('newfield').style.display="block";
+}
+
+
 </script>
+
+<section>
+	<h2>Стоп-слова</h2>
+	<span id="stopwords" onclick="selectText(this);">"продам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь",  объявление на avito, промокод дня, #ЧитаюВзаимно, #RuFollowBack, #ЧитайМеняАяТебя, server="http://www.jujuju.ru/", </span>
+
+	<h3>Стоп-слова для компьютерных программ</h3>
+	<span id="stopkomp" onclick="selectText(this);">journal="http://nnm-club.me/", торент, торрент, torrent, вакансия, ищу работу, "требуются", требуется разработчик, требуется программист, </span>
+
+	<h3>Стоп-слова для косметики</h3>
+	<span id="stopkosm" onclick="selectText(this);">код товара, аптечная закупка, black mask, наш интернет магазин, journal="http://kosmetika-sale.livejournal.com/", "АПТЕЧНАЯ КОСМЕТИКА КЭЖ", journal="http://vk.com/club40225923", journal="http://vk.com/club77573685", journal="http://vk.com/club46867429",</span>
+
+	<h3>Стоп-слова для магазинов игрушек</h3>
+	<span id="stoptoys" onclick="selectText(this);">"bit.ly", "cinema", "t.co", "Любимым деткам доставим радость", "заказать", "обменяю", "обменяюсь", "отдам", "отдаю", "поменяю", "поменяюсь", "предлагаю", "продам", "продаю", "р.", Convention Center, Movie, author="http://vk.com/club127154075", author="http://vk.com/club127154362", author="http://vk.com/club127154647", episode, journal="http://vk.com/club100428470", journal="http://vk.com/club108505287", journal="http://vk.com/club127154647", journal="http://vk.com/club51036509", lego_laso, season, server="http://ecoshopsforum.xyz/", server="http://shop-t.ru/", анимационный, анимация, артикул, бесплатно, в ассорт, в ассортименте, в наличии, вналичии, выкуп, грн, заказ, закуп, канал, капкейк, квартира NERF в России, кино*, конкурс, купон, мне понравилось видео, мульт*, наименование, начальная цена,  объявление на avito, озвучка, онлайн, оптовая закупка, орг сбор, отзыв, полный ассортимент, приз, призовой, прокат, промокод дня, режиссер, руб, сезон, секс, сериал*, серия, скачать, скидка, смотреть видео, сп, субтитры, сценарий, сценарист, титры, торент, торрент, торт, трейлер, фильм, цена обзор инструкция, цена по акции, фильм</span>
+
+	<h3>Аренда</h3>
+	<span id="arenda" onclick="selectText(this);">предпочтение некурящей, "сдам", "сдаю", "сниму", "сдается на длительный срок", комн квартира, комнатная, сдается на долгий срок, "сдаем", изолированная комната, двухкомнатная, однокомнатная, трехкомнатная, четырехкомнатная, "сдают", от собственника, сдается квартира, сдается комната, сдается студия, </span>
+
+	<h3>Новости</h3>
+	<span  id="news" onclick="selectText(this);">обзор прессы, по сообщению, "сообщает", информирует, информационное агентство, реализация закона, worldnewsday, news, novosti, итар тасс</span>
+	<span class="comments">//todo:
+	<ul><li>подключение стоп-слов на разные темы</li>
+	<li>возможность добавления своих стоп-слов</li>
+	<li>второе поле textarea для удаления из первого каких-то слов</li></ul>
+	</span>
+
+</section>
 </body></html>
