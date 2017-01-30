@@ -4770,30 +4770,101 @@ button.close {
 .navbar-form {
   padding: 0; }
 
+.btn-success {
+  background-color: #83AF9B;
+  border-color: #83AF9B; }
+  .btn-success:hover {
+    background-color: #C8C8A9; }
+
+form input, .form-control {
+  color: #000; }
+  form input:active, form input:focus, .form-control:active, .form-control:focus {
+    border-color: #83AF9B;
+    box-shadow: none; }
+
+::-webkit-input-placeholder {
+  color: #C8C8A9; }
+
+::-moz-placeholder {
+  color: #C8C8A9; }
+
+/* Firefox 19+ */
+:-moz-placeholder {
+  color: #C8C8A9; }
+
+/* Firefox 18- */
+:-ms-input-placeholder {
+  color: #C8C8A9; }
+
+html {
+  background-color: #F9CDAD; }
+
 body {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: calc(100vh - 20px);
+  margin: 10px;
+  background-color: #fff; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "PT Sans", sans-serif;
   font-weight: 700; }
 
-p {
+h2 {
+  color: #83AF9B; }
+
+h3, h4, h5, h6 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  color: #83AF9B; }
+
+.main-content {
   font-size: 17px; }
+
+a {
+  color: #000;
+  background-color: #F9CDAD; }
+  a:hover {
+    color: #000;
+    text-decoration: underline; }
 
 /*.container {
 	background-color: $light;
 }
+
 .col-md- {
 	&8, &2, &7, &3{
 	border:1px solid red;
 	}
 }*/
 .header {
-  margin-top: 20px; }
+  padding-top: 20px; }
 
 .header__btn {
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.header__logo {
+  margin-bottom: 20px; }
+
+.navbar-default {
+  background-color: transparent;
+  border-color: #83AF9B; }
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border-color: transparent; }
+
+.navbar-default .navbar-nav > li > a {
+  background-color: transparent;
+  color: #83AF9B; }
+  .navbar-default .navbar-nav > li > a:hover {
+    background-color: #F9CDAD;
+    color: #83AF9B; }
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #F9CDAD;
+  color: #83AF9B; }
 
 .nav > li.first-menu__item {
   font-size: 15px; }
@@ -4895,8 +4966,6 @@ p {
   .navbar-right ~ .navbar-right{
     margin-right: 0; }
   .navbar-toggle{
-    display: none; }
-  .visible-xs{
     display: none; }
   .nav > li.first-menu__item--mobile{
     display: none; }
@@ -5583,8 +5652,6 @@ p {
     transform: translate3d(0, 0, 0);
     left: 0; } }
   @media (max-width: 480px){
-  .visible-xs{
-    display: block; }
   .nav > li.first-menu__item--mobile{
     display: block; }
   .second-menu__list{
