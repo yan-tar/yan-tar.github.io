@@ -69,7 +69,7 @@ document.getElementById('text_to').addEventListener('click', function() { //вы
 	
 var stopWords = document.querySelector('.stopwords');
 
-stopWords.addEventListener('click', selectText(this));
+stopWords.addEventListener('click', selectText(stopWords));
 	
 var selectText = function(n){
 	var r = document.createRange();
