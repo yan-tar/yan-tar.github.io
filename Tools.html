@@ -7,13 +7,36 @@
 <style class="cp-pen-styles">
 	h2, h3 {color:#b3b3b3;}
 	section {position:relative;width:50%;float:left;}
-	#resetTextFrom {position:absolute; left:10px;top:5px;}
-	textarea {width:300px; height:100px;display:block;margin:0 10px 10px;padding-top:30px;}
-	/*#newfield {display:none;}*/
-	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
-	input {margin-left:10px;}
-	span.vsego { color: #777; font-size: 0.7em; position: relative; top: -25px; left: 320px; }
 	span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
+	input {margin-left:10px;}
+	input:hover::before {
+		content: "werwewe";
+		width: 10px;
+		height: 10px;
+		background-color: green;
+	}
+	#resetTextFrom {position:absolute; left:10px;top:5px;}
+	textarea {
+		display:block;
+		width:300px; height:100px;
+		margin:0 10px 10px;
+		padding-top:30px;
+		}
+	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
+	#newfield {display:none;}
+	span.vsego { 
+				display: block;
+				position: relative; 
+				top: -35px; left: 320px; 
+				width: 20px; height:20px;
+				outline: 1px solid red;
+				color: #777; 
+				font-size: 0.7em; 
+				}
+	#vsego1 {
+		position: absolute;
+		top: 110px;
+	}
 	.left {float:left;baseline:top;}
 </style>
 </head>
@@ -24,7 +47,7 @@
 	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left">
 	<div class="left" id="newfield">
 		<textarea id="text_from2"></textarea>
-		<input type="submit" onclick="joinFields();" value="JOIN">
+		<input type="submit" onclick="joinFields();" value="JOIN" data-text="Соединить содержимое в словосочетания">
 	</div>
 	<br style="clear:both">
 	<div id="text_to">
@@ -36,84 +59,6 @@
 	<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 	<p><strong>Не забывать про Яндекс Маркет!</strong></p>
 </section>
-<script>
-var joinFields = function(){
-	var field1 = document.getElementById('text_from').value;
-	var field2 = document.getElementById('text_from2').value;
-	var strings1 = field1.split(', '); 
-	var strings2 = field2.split(', ');
-	var newString = [];
-	for (var i = 0; i < strings1.length; i++) {
-		for (var z = 0; z < strings2.length; z++)
-			{			
-			newString.push(strings1[i] + " " +strings2[z]);
-			};
-	  };
-	var vsego2 = newString.length;
-	newString.join();
-	document.getElementById('text_to_span').innerHTML = newString;
-	document.getElementById('vsego2').innerHTML = vsego2;
-}
-
-textToSmall = function () {
-    var text_from = document.getElementById('text_from').value;
-    document.getElementById('text_to_span').innerHTML = text_from.toLowerCase();
-	return false;
-};
-
-document.getElementById('text_to').addEventListener('click', function() { //выделение текста в диве text_to
-    var r = document.createRange();
-    r.selectNode(document.getElementById('text_to_span'));
-    document.getSelection().addRange(r);
-});
-	
-//var stopWords = document.querySelector('.stopwords');
-//stopWords.addEventListener('click', selectText(stopWords));
-	
-var selectText = function(n){
-	var r = document.createRange();
-	r.selectNode(n);
-	document.getSelection().addRange(r);
-}
-
-textReset = function(){
-	document.getElementById('text_from').value ="";
-	return false;
-}
-
-//разбивает и сортирует по алфавиту, если нужна сортировка
-function tosort(n){ 
-	if(typeof n != "object"){ n = n.split(', ');}
-	if (document.getElementById('tosort').checked == true) 	{ n.sort();	}
-	return n;
-}
-
-//оставляет только уникальные слова
-function unique() {
-	var text_from = document.getElementById('text_from').value;
-	var strings = tosort(text_from);
-	var obj = {};
-	
-	document.getElementById('vsego1').innerHTML = strings.length;
-	  for (var i = 0; i < strings.length; i++) {
-		var str = strings[i];
-		obj[str] = true; // запомнить строку в виде свойства объекта //UPD: что это значит?! через пару недель уже даже комментарии прочитать не могу
-	  }
-	//надо бы превратить обратно в строку
-	var newstr = Object.keys(obj).join(", ");
-
-    document.getElementById('text_to_span').innerHTML = newstr;
-	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
-	return false;
-}
-
-function showFrom2(){
-	document.getElementById('newfield').style.display="block";
-}
-
-
-</script>
-
 <section>
 	<h2>Стоп-слова</h2>
 	<span id="stopwords" class="stopwords" onclick="selectText(this);">"продам", "породам", "продаю", "отдам", "отдаю", в наличии, вналичии, выкуп, закуп, сп, орг сбор, "обменяю", "поменяю", "обменяюсь", "поменяюсь",  объявление на avito, промокод дня, server="http://www.jujuju.ru/", "в ассортименте", </span>
@@ -145,15 +90,109 @@ function showFrom2(){
 	<span id="watches" class="stopwords" onclick="selectText(this);">часы новый год, играя в казино вулкан, стильные часы для, брендовые часы, элегантные мужские часы, престижные мужские часы, превосходные мужские часы, потрясающие наручные часы, лучшие наручные часы, часы Emporio Armani, наручные часы Armani, любимому мужустили bmw бьянка, стили дисков bmw тренда уровни, царевич часы клайв, block часы ядерная, мужские часы Armani, бумер под кунсей ролл, на майнкрафт, блокады блокировка,</span>
 	
 	<h3>Дешевые аналоги лекарств</h3>
-	<span id="analog" class="stopwords">"препараторов с идентичным составом", "препаратов с идентичным составом", "Вот как надо общаться в аптеке", "аналоги лекарств", "Многие дорогостоящие лекарственные препараты", "Важливо знати кожному", "дешевые аналоги", "замена дорогих лекарств", "Белосалик (380руб) и Акридерм СК", "Белосалик (380руб) = Акридерм СК", "аналоги дорогих лекарств",</span>
+	<span id="analog" class="stopwords" onclick="selectText(this);">"препараторов с идентичным составом", "препаратов с идентичным составом", "Вот как надо общаться в аптеке", "аналоги лекарств", "Многие дорогостоящие лекарственные препараты", "Важливо знати кожному", "дешевые аналоги", "замена дорогих лекарств", "Белосалик (380руб) и Акридерм СК", "Белосалик (380руб) = Акридерм СК", "аналоги дорогих лекарств",</span>
 	
 	<span class="comments">//todo:
 	<ul><li>подключение стоп-слов на разные темы</li>
 	<li>возможность добавления своих стоп-слов</li>
 	<li>второе поле textarea для удаления из первого каких-то слов</li></ul>
 	Ссылка на редактирование <a href="https://github.com/yan-tar/yan-tar.github.io/edit/master/Tools.html">тут</a>
-	</span>
-	
-	
+	</span>	
 </section>
+
+<script>
+var joinFields = function(){
+	var field1 = document.getElementById('text_from').value;
+	var field2 = document.getElementById('text_from2').value;
+	var strings1 = field1.split(', '); 
+	var strings2 = field2.split(', ');
+	var newString = [];
+	for (var i = 0; i < strings1.length; i++) {
+		for (var z = 0; z < strings2.length; z++)
+			{			
+			newString.push(strings1[i] + " " +strings2[z]);
+			};
+	  };
+	var vsego2 = newString.length;
+	newString.join();
+	document.getElementById('text_to_span').innerHTML = newString;
+	document.getElementById('vsego2').innerHTML = vsego2;
+}
+
+textToSmall = function () {
+    var text_from = document.getElementById('text_from').value;
+    document.getElementById('text_to_span').innerHTML = text_from.toLowerCase();
+	return false;
+};
+
+
+
+document.getElementById('text_to').addEventListener('click', function() { //выделение текста в диве text_to
+    if (window.getSelection) {
+        let range = document.createRange();
+        range.selectNode(document.getElementById('text_to_span'));
+		let selection = window.getSelection();
+	    selection.removeAllRanges();
+		selection.addRange(range);
+		}
+});
+	
+	
+var stopWords = document.querySelector('#analog');
+stopWords.addEventListener('click', selectText(stopWords));//отказывается работать (
+	
+function selectText(n){
+	if (window.getSelection) {
+        let range = document.createRange();
+        range.selectNode(n);
+		let selection = window.getSelection();
+	    selection.removeAllRanges();
+		selection.addRange(range);
+		}
+}
+
+textReset = function(){
+	document.getElementById('text_from').value ="";
+	return false;
+}
+
+//разбивает и сортирует по алфавиту, если нужна сортировка
+function tosort(n){ 
+	if(typeof n != "object"){ n = n.split(', ');}
+	if (document.getElementById('tosort').checked == true) 	{ n.sort();	}
+	return n;
+}
+
+//оставляет только уникальные слова
+function unique() {
+	var text_from = document.getElementById('text_from').value;
+	var strings = tosort(text_from);
+	var obj = {};
+	
+	document.getElementById('vsego1').innerHTML = strings.length;
+	  for (var i = 0; i < strings.length; i++) {
+		var str = strings[i];
+		obj[str] = true; // запомнить строку в виде свойства объекта 
+	  }
+	//надо бы превратить обратно в строку
+	var newstr = Object.keys(obj).join(", ");
+
+    document.getElementById('text_to_span').innerHTML = newstr;
+	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
+	return false;
+}
+
+function showFrom2(){
+	var newfield = document.getElementById('newfield');
+	if (newfield.style.display=="block")
+	{
+		newfield.style.display = "none";
+	}
+	else {
+		newfield.style.display = "block";
+	}
+}
+
+
+</script>
 </body></html>
