@@ -9,11 +9,8 @@
 	section {position:relative;width:50%;float:left;}
 	span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
 	input {margin-left:10px;}
-	input:hover::before {
+	input:hover {
 		content: "werwewe";
-		width: 10px;
-		height: 10px;
-		background-color: green;
 	}
 	#resetTextFrom {position:absolute; left:10px;top:5px;}
 	textarea {
@@ -22,14 +19,13 @@
 		margin:0 10px 10px;
 		padding-top:30px;
 		}
-	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3;overflow:auto;margin:10px;}
+	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3; overflow:auto; margin:10px;}
 	#newfield {display:none;}
 	span.vsego { 
 				display: block;
 				position: relative; 
 				top: -35px; left: 320px; 
 				width: 20px; height:20px;
-				outline: 1px solid red;
 				color: #777; 
 				font-size: 0.7em; 
 				}
@@ -114,7 +110,7 @@ var joinFields = function(){
 			};
 	  };
 	var vsego2 = newString.length;
-	newString.join();
+	newString.join("; ");
 	document.getElementById('text_to_span').innerHTML = newString;
 	document.getElementById('vsego2').innerHTML = vsego2;
 }

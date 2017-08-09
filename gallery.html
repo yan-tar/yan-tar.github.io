@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gallery for Dmitri Maloff</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+  <script src="js/jcarlite.js"></script>
+	<link rel="stylesheet" type="text/css" href="gallery.css">
+
+</head>
+<body>
+	<div class="entry-content">
+		<div id='gallery' class='gallery galleryid-51'>
+			<ul>
+			<img src="img/T98C6074.jpg" 
+				alt="" width="1000" height="667" 
+				class="alignnone size-full wp-image-45" 
+				srcset="img/T98C6074.jpg 1000w, img/T98C6074-300x200.jpg 300w, img/T98C6074-768x512.jpg 768w" 
+				sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" />
+
+			<p><a href="img/T98C4734.jpg"><img src="img/T98C4734.jpg" alt="" width="1000" height="667" class="alignnone size-full wp-image-41" srcset="img/T98C4734.jpg 1000w, img/T98C4734-300x200.jpg 300w, img/T98C4734-768x512.jpg 768w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></a></p>
+			<a href="img/2136320_original.jpg"><img src="img/2136320_original.jpg" alt="" width="1000" height="667" class="alignnone size-full wp-image-17" srcset="img/2136320_original.jpg 1000w, img/2136320_original-300x200.jpg 300w, img/2136320_original-768x512.jpg 768w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></a></ul>
+		</div><!--//gallery-1-->
+			
+		<script type="text/javascript"> 
+		var j = jQuery.noConflict();
+		j(document).ready(function() {
+			var gallery = j( "#gallery" );
+			var galleryImgs = gallery.find("img, picture");
+			var controls = "<div class='gallery-controls'><div class='gallery-control gallery-control--left'><</div><div class='gallery-control gallery-control--right'>></div></div>";
+			var controlItems = "";
+			var $btnGoStr = "[";//string for jCarouselLite options
+			galleryImgs.each(function( i ) {
+		   if (j(this).parent().is( "a" )){
+			   	galleryImgs[i] = j(this).parent().get(0);
+			  }
+			  if ( j(galleryImgs[i]).parent().is( "p" ) ) {
+			    j(galleryImgs[i]).unwrap();
+			  }
+			  var n = i+1;
+			  controlItems +="<div class='gallery-control gallery-control--item gallery-control--" + n + "'></div>";
+			  $btnGoStr += '".gallery-control--' + n + '",';
+			});
+			$btnGoStr += "]";
+			console.log($btnGoStr);
+			galleryImgs.wrap( "<li></li>" );	
+			j("ul").after(controls);		
+			j(".gallery-control--left").after(controlItems);
+
+
+			j("#gallery").jCarouselLite({
+				visible:1,
+				circular: 1,
+				responsive: true, 
+				autoWidth: true,
+				init: function(opts, $lis) {
+					var firstImg = j($lis[0].children);
+					console.log(firstImg);
+	    		console.log (firstImg.width());
+	    		//break;
+	  			}
+				});
+		});
+		</script>
+	</div><!-- .entry-content -->
+</body>
+</html>

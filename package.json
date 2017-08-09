@@ -1,0 +1,33 @@
+{
+  "name": "test-projects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "promises.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://yan-tar@github.com/yan-tar/yan-tar.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yan-tar/yan-tar.github.io/issues"
+  },
+  "homepage": "https://github.com/yan-tar/yan-tar.github.io#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "browser-sync": "^2.18.12",
+    "css-mqpacker": "^6.0.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-csso": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "run-sequence": "^2.0.0"
+  }
+}
