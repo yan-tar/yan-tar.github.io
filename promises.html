@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Конспект вебинара по промисам на Специалисте</title>
+	<script src="promises.js"></script>
+</head>
+<body>
+<h1>Конспект вебинара по промисам на Специалисте</h1>
+<pre>Промисы читабельны и асинхронны
+Нужны 1. чтобы избежать callback hell, 2. случаев когда строки в коде вроде как связаны логически, но не кодом, напр.:
+img.addEventListener("load", foo1) {}
+img.addEventListener("error", foo2) {}
+
+Три состояния: pending, resolved, rejected
+
+стандартный синтаксис:
+new Promise(() => {})
+new Promise(function(resolve, reject) {});
+</body>
+</html>
