@@ -101,7 +101,7 @@
 var joinFields = function(){
 	var field1 = document.getElementById('text_from').value;
 	var field2 = document.getElementById('text_from2').value;
-	var strings1 = field1.split(', '); 
+	var strings1 = field1.split(', ');
 	var strings2 = field2.split(', ');
 	var newString = [];
 	for (var i = 0; i < strings1.length; i++) {
@@ -111,8 +111,7 @@ var joinFields = function(){
 			};
 	  };
 	var vsego2 = newString.length;
-	newString.join("; ");
-	document.getElementById('text_to_span').innerHTML = newString;
+	document.getElementById('text_to_span').innerHTML = newString.join(", ");
 	document.getElementById('vsego2').innerHTML = vsego2;
 }
 
