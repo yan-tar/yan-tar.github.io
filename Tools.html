@@ -19,6 +19,8 @@
 		margin:0 10px 10px;
 		padding-top:30px;
 		}
+	.doptext {padding-top: 0; height: 30px;}
+	.doptext:focus { height: 100px; }
 	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3; overflow:auto; margin:10px;}
 	#newfield {display:none;}
 	span.vsego { 
@@ -34,6 +36,15 @@
 		top: 110px;
 	}
 	.left {float:left;baseline:top;}
+
+textarea::-webkit-input-placeholder {color:#c0392b;}
+textarea::-moz-placeholder          {color:#c0392b;}/* Firefox 19+ */
+textarea:-moz-placeholder           {color:#c0392b;}/* Firefox 18- */
+textarea:-ms-input-placeholder      {color:#c0392b;}
+textarea:focus::-webkit-input-placeholder {color: transparent;}
+textarea:focus::-moz-placeholder          {color: transparent}
+textarea:focus:-moz-placeholder           {color: transparent}
+textarea:focus:-ms-input-placeholder      {color: transparent}
 </style>
 </head>
 <body>
@@ -42,8 +53,9 @@
 	<textarea id="text_from" class="left" ></textarea> <span id="vsego1" class="vsego"></span> 
 	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left">
 	<div class="left" id="newfield">
-		<textarea id="text_from2"></textarea>
-		<input type="submit" onclick="joinFields();" value="JOIN" data-text="Соединить содержимое в словосочетания">
+		<textarea class="doptext" id="text_from2" placeholder="Объединение в словосочетания"></textarea>
+		<textarea class="doptext" id="okonch" placeholder="Добавления окончаний"></textarea>
+		<input type="submit" onclick="joinFields();" value="Объединить" data-text="Соединить содержимое в словосочетания">
 	</div>
 	<br style="clear:both">
 	<div id="text_to">
@@ -102,14 +114,37 @@
 <script>
 var joinFields = function(){
 	var field1 = document.getElementById('text_from').value;
-	var field2 = document.getElementById('text_from2').value;
+	var field2, probel;
+		console.log('пытаемся объединить');
+	if(document.getElementById('text_from2').value.length > 0){
+		field2 = document.getElementById('text_from2').value;
+		probel  = true;
+		console.log('словосочетания:', field2);
+	}
+	else {
+		console.log('это не словосочетания');
+	}
+	if (document.getElementById('okonch').value.length > 0) {
+		field2 = document.getElementById('okonch').value;
+		probel = false;
+		console.log('окончания: ', field2);
+	}
+	else {
+		console.log('это не окончания');
+	}
+	console.log('объединяем с ',field2,'; probel',probel);
 	var strings1 = field1.split(', ');
 	var strings2 = field2.split(', ');
 	var newString = [];
 	for (var i = 0; i < strings1.length; i++) {
 		for (var z = 0; z < strings2.length; z++)
 			{			
-			newString.push(strings1[i] + " " +strings2[z]);
+				if(probel) {
+					newString.push(strings1[i] + " " +strings2[z]);
+				}
+				else {
+					newString.push(strings1[i] + strings2[z]);
+				}
 			};
 	  };
 	var vsego2 = newString.length;
@@ -117,7 +152,7 @@ var joinFields = function(){
 	document.getElementById('vsego2').innerHTML = vsego2;
 }
 
-textToSmall = function () {
+var textToSmall = function () {
     var text_from = document.getElementById('text_from').value;
     document.getElementById('text_to_span').innerHTML = text_from.toLowerCase();
 	return false;
