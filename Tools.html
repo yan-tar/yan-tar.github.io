@@ -19,8 +19,7 @@
 		margin:0 10px 10px;
 		padding-top:30px;
 		}
-	.doptext {padding-top: 0; height: 30px;}
-	.doptext:focus { height: 100px; }
+	.doptext {padding-top: 0; }
 	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3; overflow:auto; margin:10px;}
 	#newfield {display:none;}
 	span.vsego { 
@@ -56,6 +55,9 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 		<textarea class="doptext" id="text_from2" placeholder="Объединение в словосочетания"></textarea>
 		<textarea class="doptext" id="okonch" placeholder="Добавления окончаний"></textarea>
 		<input type="submit" onclick="joinFields();" value="Объединить" data-text="Соединить содержимое в словосочетания">
+		<fieldset><input type="text" name="second_name" id="second_name" placeholder="Фамилия">
+		<input type="text" name="first_name" id="first_name" placeholder="Имя">
+		<input type="text" name="third_name" id="third_name" placeholder="Отчество"><input type="submit" value="Варианты имени" data-text="Предложить все варианты написания имени" onclick="makeNames();"></fieldset>
 	</div>
 	<br style="clear:both">
 	<div id="text_to">
@@ -95,7 +97,7 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 	<span id="kazakhstan" class="stopwords">казахстан, казахстанский, тенге, тг, тнг, алматы, алматинский, астана, астанинский, шымкент, шымкентский, караганда, актобе, павлодар, костанай, усть каменогорск, уральск, карагандинский, актобинский, павлодарский, костанайский, усть каменогорский, устькаменогорский, geo="48.136207 67.153550 500km", geo="51.128422 71.430564 400km", geo="54.865472 69.135602 70km", geo="48.906463  83.562631 200km", geo="47.546609 54.277671 500km", geo="43.899938 77.531445 100km", geo="43.300674 68.270345 200km"</span>
 
 	<h3>Спам про часы и прочий спам</h3>
-	<span id="watches" class="stopwords">часы новый год, играя в казино вулкан, стильные часы для, брендовые часы, элегантные мужские часы, престижные мужские часы, превосходные мужские часы, потрясающие наручные часы, лучшие наручные часы, часы Emporio Armani, наручные часы Armani, любимому мужустили bmw бьянка, стили дисков bmw тренда уровни, царевич часы клайв, block часы ядерная, мужские часы Armani, бумер под кунсей ролл, на майнкрафт, блокады блокировка, зарядка без проводов и переходников, схемы заработка в интернете, удаленному и быстрому заработку, быстро продавать в Интернете, тема по заработку в интернете, схема по заработку в интернете, заработок для подростков дома, порно, порнуха, лесби, секс, член, пизда, </span>
+	<span id="watches" class="stopwords">часы новый год, играя в казино вулкан, стильные часы для, брендовые часы, элегантные мужские часы, престижные мужские часы, превосходные мужские часы, потрясающие наручные часы, лучшие наручные часы, часы Emporio Armani, наручные часы Armani, любимому мужустили bmw бьянка, стили дисков bmw тренда уровни, царевич часы клайв, block часы ядерная, мужские часы Armani, бумер под кунсей ролл, на майнкрафт, блокады блокировка, зарядка без проводов и переходников, схемы заработка в интернете, удаленному и быстрому заработку, быстро продавать в Интернете, тема по заработку в интернете, схема по заработку в интернете, заработок для подростков дома, порно, порнуха, лесби, секс, член, пизда, "покупайте тут и не бойтесь", "оплатила за телефон на почте", "забрала телефон на почтовом отделении", "получила на почте", "забрала на почтовом отделении", "платила за телефон на почте", "получила посылку на почтовом отделении",</span>
 	
 	<h3>Дешевые аналоги лекарств</h3>
 	<span id="analog" class="stopwords">"препараторов с идентичным составом", "препаратов с идентичным составом", "Вот как надо общаться в аптеке", "аналоги лекарств", "Многие дорогостоящие лекарственные препараты", "Важливо знати кожному", "дешевые аналоги", "замена дорогих лекарств", "Белосалик (380руб) и Акридерм СК", "Белосалик (380руб) = Акридерм СК", "аналоги дорогих лекарств",</span>
@@ -112,6 +114,29 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 </section>
 
 <script>
+//todo: переделать в одну строчку и разбивать по пробелам
+//потом еще можно сделать возможность забивать сразу несколько имен
+var makeNames = function(){
+	let person = {
+		sName: document.getElementById('second_name').value.toLowerCase(),
+		fName: document.getElementById('first_name').value.toLowerCase(),
+		tName: document.getElementById('third_name').value.toLowerCase(),
+		fInitial: document.getElementById('first_name').value.charAt(0).toLowerCase(),
+		tInitial: document.getElementById('third_name').value.charAt(0).toLowerCase()
+	}
+	let nameVar = person.sName +" "+person.fName +" "+ person.tName + ", " + 
+		person.fName +" "+ person.tName +" " + person.sName + ", " + 
+		person.fName +" "+ person.sName + ", " + 
+		person.fInitial +" "+ person.tInitial +" " + person.sName + ", " + 
+		person.sName + " " + person.fInitial +" "+ person.tInitial +", " + 
+		person.fInitial +" "+ person.sName;
+	document.getElementById('text_to_span').innerHTML = nameVar;
+
+	document.getElementById('second_name').value="";
+	document.getElementById('first_name').value="";
+	document.getElementById('third_name').value="";
+}
+
 var joinFields = function(){
 	var field1 = document.getElementById('text_from').value;
 	var field2, probel;
