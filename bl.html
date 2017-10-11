@@ -3,10 +3,31 @@
 <head>
 	<title>Bubble Life</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+	<script src="js/p5dom.js"></script>
 
 	<script src="js/bubbles_life.js"></script>
+	<style>
+	.wrapper {display: flex;}
+	.news, .relations {
+		height: 200px;
+		overflow-y: auto;
+		margin-left: 15px; 
+	}
+	</style>
 </head>
 <body>
 <h1>Welcome to Bubbles' Life</h1>
+<section id="canvas_holder"></section>
+<div class="wrapper">
+	<section id="settings_holder">
+		<div id="slider_holder"><span id="slider_value">Speed: 8</span></div>	
+	</section>
+	<section id="news" class="news">
+		<h2>Our news</h2>
+	</section>
+	<section id="relations" class="relations">
+		<p>Click on a bubble</p>
+	</section>
+</div>
 </body>
 </html>
