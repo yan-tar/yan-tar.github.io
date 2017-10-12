@@ -6,27 +6,55 @@
 	<script src="js/p5dom.js"></script>
 
 	<script src="js/bubbles_life.js"></script>
+	<script src="js/bl_settings.js"></script>
+	<script src="js/bubble.js"></script>
+
 	<style>
 	.wrapper {display: flex;}
-	.news, .relations {
+	.news {
+		height: 300px;
+		overflow-y: auto;
+		position : relative; bottom:0;
+	}
+	.news-wrapper {
+		margin-left: 15px; 
+	}
+	.relations {
 		height: 200px;
 		overflow-y: auto;
 		margin-left: 15px; 
+		position : relative; bottom:0;
+	}
+	.settings {
+		margin-bottom: 10px;
+		padding: 5px;
+		border: 1px solid #333;
 	}
 	</style>
 </head>
 <body>
 <h1>Welcome to Bubbles' Life</h1>
-<section id="canvas_holder"></section>
+<div class="wrapper">
+	<section id="canvas_holder"></section>
+	<section class="news-wrapper">
+		<h2>Our news</h2>
+		<div id="news" class="news"></div>
+		<div id="stats"></div>
+	</section>
+</div>
 <div class="wrapper">
 	<section id="settings_holder">
-		<div id="slider_holder"><span id="slider_value">Speed: 8</span></div>	
-	</section>
-	<section id="news" class="news">
-		<h2>Our news</h2>
-	</section>
+		<div id="slider_holder" class="settings  settings--speed">
+			<span id="slider_value">Speed: 8</span>
+		</div>	
+		<div class="settings--rgb  settings"> Change Background
+			<div class="" id="red"></div>
+			<div class="" id="green"></div>
+			<div id="blue"></div>
+		</div>
+	</section>	
 	<section id="relations" class="relations">
-		<p>Click on a bubble</p>
+		<h2>Meet the Bubble</h2>
 	</section>
 </div>
 </body>
