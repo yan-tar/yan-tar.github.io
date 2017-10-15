@@ -24,6 +24,7 @@ class Bubble {
     this.parents = [];
     this.friends = [];
     this.showStatus = false;
+    this.img = smiles[floor(random(1, 6))];
     updateDemografy();
   }
 
@@ -38,8 +39,13 @@ class Bubble {
     ellipse(this.x, this.y, this.r*2, this.r*2);
     
     fill(255, 200);
-    if(this.status == 'I will die soon.' || this.showStatus == true)
+    if(this.status == 'I will die soon.' || this.showStatus == true) {
       text(this.n +': ' + this.status, this.x-this.r, this.y+this.r+5);
+    }
+   // if(this.status == 'I am a teenager.'){
+    imageMode(CENTER);
+      image(this.img, this.x, this.y);
+   // }
   }
 
   update(){

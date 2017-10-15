@@ -21,6 +21,15 @@ var bNames = ['JeanMarie', 'Gerthruda', 'Majkinka', 'Dan', 'Mike', 'Pokemon',
 var bubbleCircle = 0, bubbleMiniCircle = 0;
 var myBubble, slider, canvas;
 var bubbleStat = {firstMeetings: 0, moreLife: 0, saveLife: 0};
+let smiles = new Array(7);
+
+function preload(){
+  for (let i=1; i < smiles.length; i++){
+  //let i=2;
+  console.log('/img/smile' + i + '_18.png');
+    smiles[i] = loadImage('/img/smile' + i + '_18.png');
+  }
+}
 
 function setup() {
   frameRate(baseSpeed);
