@@ -68,6 +68,9 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 	<input type="submit" id="" onclick="unique();" value="Удалить повторы">
 	<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 	<p><strong>Не забывать про Яндекс Маркет!</strong></p>
+	<div id="trash">
+		<span id="text_to_trash"></span>
+	</div>
 </section>
 <section>
 	<h2>Стоп-слова</h2>
@@ -104,7 +107,7 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 	
 	<span class="comments">//todo:
 	<ul><li>подключение стоп-слов на разные темы</li>
-	<li>возможность добавления своих стоп-слов</li>
+	<li>закавычивание и раскавычивание</li>
 	<li>второе поле textarea для удаления из первого каких-то слов</li></ul>
 	Ссылка на редактирование <a href="https://github.com/yan-tar/yan-tar.github.io/edit/master/Tools.html">тут</a>
 	</span>	
@@ -179,7 +182,7 @@ var joinFields = function(){
 
 var textToSmall = function () {
     var text_from = document.getElementById('text_from').value;
-    document.getElementById('text_to_span').innerHTML = text_from.toLowerCase();
+    document.getElementById('text_to_trash').innerHTML = text_from.toLowerCase();
 	return false;
 };
 
@@ -227,18 +230,27 @@ function tosort(n){
 //оставляет только уникальные слова
 function unique() {
 	var text_from = document.getElementById('text_from').value;
-	var strings = tosort(text_from);
+	var words = tosort(text_from);
+	var trash = {};
 	var obj = {};
 	
-	document.getElementById('vsego1').innerHTML = strings.length;
-	  for (var i = 0; i < strings.length; i++) {
-		var str = strings[i];
-		obj[str] = true; // запомнить строку в виде свойства объекта 
+	document.getElementById('vsego1').innerHTML = words.length;
+	  for (var i = 0; i < words.length; i++) {
+			var str = words[i];
+			if (str in obj) {
+			  obj[str] = true; // запомнить строку в виде свойства объекта 
+			}
+			else {
+				trash[str] = true;
+			}
+			
 	  }
 	//надо бы превратить обратно в строку
 	var newstr = Object.keys(obj).join(", ");
+	var newtrash = Object.keys(trash).join(", ");
 
     document.getElementById('text_to_span').innerHTML = newstr;
+    document.getElementById('trash').innerHTML = newtrash;
 	document.getElementById('vsego2').innerHTML = Object.keys(obj).length;
 	return false;
 }
