@@ -66,7 +66,8 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 	<span id="vsego2" class="vsego"></span>
 	<input type="submit" id="" onclick="textToSmall();" value="To small case">
 	<input type="submit" id="" onclick="unique();" value="Удалить повторы">
-	<small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
+	<div><small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
+	<small><input type="checkbox" name="emptysplit" id="emptysplit">Сортировать по алфавиту</small></div>
 	<p><strong>Не забывать про Яндекс Маркет!</strong></p>
 	<div id="trash">
 		<span id="text_to_trash"></span>
@@ -221,8 +222,12 @@ textReset = function(){
 }
 
 //разбивает и сортирует по алфавиту, если нужна сортировка
-function tosort(n){ 
-	if(typeof n != "object"){ n = n.split(', ');}
+function tosort(n){
+	var split = ', ';
+	if (document.getElementById('emptysplit').checked == true){
+		split = ' ';
+	}
+	if(typeof n != "object"){ n = n.split(split);}
 	if (document.getElementById('tosort').checked == true) 	{ n.sort();	}
 	return n;
 }
@@ -237,7 +242,7 @@ function unique() {
 	document.getElementById('vsego1').innerHTML = words.length;
 	  for (var i = 0; i < words.length; i++) {
 			var str = words[i];
-			if (str in obj) {
+			if (!(str in obj)) {
 			  obj[str] = true; // запомнить строку в виде свойства объекта 
 			}
 			else {
