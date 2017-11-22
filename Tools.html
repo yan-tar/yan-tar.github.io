@@ -93,15 +93,16 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 		</div>
 		получаемый текст:
 		<div class="fio-to">
-			<input type="checkbox" name="famnameotch" id="famnameotch" checked>фамилия имя отчество <br />
-			<input type="checkbox" name="nameotchfam" id="nameotchfam" checked>имя отчество фамилия <br />
-			<input type="checkbox" name="namefam" id="namefam" checked>имя фамилия <br />
-			<input type="checkbox" name="famname" id="famname" checked>фамилия имя<br />
-			<input type="checkbox" name="nofam" id="nofam" checked>и о фамилия<br />
-			<input type="checkbox" name="famno" id="famno" checked>фамилия и о<br />
-			<input type="checkbox" name="nfam" id="nfam" checked>и фамилия<br />
-			<input type="checkbox" name="famn" id="famn" checked>фамилия и 
+			<input type="checkbox" name="famnameotch" id="famnameotch" checked><label for="famnameotch">фамилия имя отчество</label> <br />
+			<input type="checkbox" name="nameotchfam" id="nameotchfam" checked><label for="nameotchfam">имя отчество фамилия</label> <br />
+			<input type="checkbox" name="namefam" id="namefam" checked><label for="namefam">имя фамилия</label> <br />
+			<input type="checkbox" name="famname" id="famname"><label for="famname" title="При выборе варианта 'фамилия имя' вариант 'фамилия имя отчество' избыточен">фамилия имя</label><br />
+			<input type="checkbox" name="nofam" id="nofam" checked><label for="nofam">и о фамилия</label><br />
+			<input type="checkbox" name="famno" id="famno" checked><label for="famno">фамилия и о</label><br />
+			<input type="checkbox" name="nfam" id="nfam" checked><label for="nfam">и фамилия</label><br />
+			<input type="checkbox" name="famn" id="famn"><label for="famn">фамилия и (не рекомендуется)</label>
 		</div>
+		<input type="button" value="Обработать" id="fio2">
 		<strong>не будет работать с двойными фамилиями и сложными именами, сорри</strong>
 	</div>
 	<div id="text_to">
@@ -385,11 +386,60 @@ function showFrom2(){
 				fioHelp.style.display = 'block'; }
 			}, 1000);
 	});
-	fio.addEventListener('click', splitPersons);
+	fio.addEventListener('click', splitPersons);	
+	document.querySelector('#fio2').addEventListener('click', splitPersons);
 	//close fio-interface
 	document.querySelector('.fio-close').addEventListener('click', function(){
 		fioHelp.style.display = 'none';
-	})
+	});
+
+	//complex logic for fio-checkboxes
+	document.getElementById('famname').addEventListener('change', function(){
+		if(this.checked) {
+			document.getElementById('famnameotch').checked = false;
+		}
+	});	
+	document.getElementById('famnameotch').addEventListener('change', function(){
+		if(this.checked) {
+			document.getElementById('famname').checked = false;
+		}
+	});
+	document.getElementById('orderfi').onchange = function(){
+		if (this.checked) {
+			document.getElementById('famnameotch').checked = false;
+			document.getElementById('nameotchfam').checked = false;			
+			document.getElementById('nofam').checked = false;
+			document.getElementById('famno').checked = false;
+			document.getElementById('famname').checked = true;
+		}
+	}
+	document.getElementById('orderif').onchange = function(){
+		if (this.checked) {
+			document.getElementById('famnameotch').checked = false;
+			document.getElementById('nameotchfam').checked = false;			
+			document.getElementById('nofam').checked = false;
+			document.getElementById('famno').checked = false;
+			document.getElementById('famname').checked = true;
+		}
+	}
+	document.getElementById('orderiof').onchange = function(){
+		if (this.checked) {
+			document.getElementById('famnameotch').checked = true;
+			document.getElementById('nameotchfam').checked = true;			
+			document.getElementById('nofam').checked = true;
+			document.getElementById('famno').checked = true;
+			document.getElementById('famname').checked = false;
+		}
+	}
+	document.getElementById('orderfio').onchange = function(){
+		if (this.checked) {
+			document.getElementById('famnameotch').checked = true;
+			document.getElementById('nameotchfam').checked = true;			
+			document.getElementById('nofam').checked = true;
+			document.getElementById('famno').checked = true;
+			document.getElementById('famname').checked = false;
+		}
+	}
 }());
 // var info;
 // $('body').mousemove(function(e){
