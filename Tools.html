@@ -6,13 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style class="cp-pen-styles">
 	h2, h3 {color:#b3b3b3;}
-	section {position:relative;width:50%;float:left;}
+	section  {position:relative;float:left;width:40%;}
+	section.fields {position:relative;width:60%;float:left;}
 	span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
 	input {margin-left:10px;}
 	input:hover {
 		content: "werwewe";
 	}
-	#resetTextFrom {position:absolute; left:10px;top:5px;}
 	textarea {
 		display:block;
 		width:300px; height:100px;
@@ -34,6 +34,8 @@
 		position: absolute;
 		top: 110px;
 	}
+
+	.top-buttons {position:absolute; left:10px;top:5px;}
 	.left {float:left;baseline:top;}
 	.stop-tab h2, .stop-tab h3 {cursor: pointer;}
 	.stop-tab h2::after, .stop-tab h3::after {
@@ -48,6 +50,11 @@
 	}
 	.stop-tab .stopwords {display: none;}
 	.stop-tab--active .stopwords {display: block;}
+	.fio-help {display: none; position: relative; max-width: 400px;  background-color: #ffffaa; }
+	.fio-help, .fio-to, .fio-from { font-size: 0.9em;}
+	.fio-from {margin-bottom: 10px;}
+	.fio-close {position: absolute; right: 5px; top:5px; cursor: pointer; padding: 5px;	}
+
 
 textarea::-webkit-input-placeholder {color:#c0392b;}
 textarea::-moz-placeholder          {color:#c0392b;}/* Firefox 19+ */
@@ -60,24 +67,47 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 </style>
 </head>
 <body>
-<section>
-	<input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
+<section class="fields">
+	<div class="top-buttons"><input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
+	<input type="submit" onclick="textToSmall();" value="A->a" title="Перевести все в нижний регистр">
+	<input type="submit" id="fio" name="fio" value="ФИО" title="Превратить строку типа 'Иванов Иван Иванович, Петров Петр Петрович' в строку типа 'иванов иван иванович, иван иванович иванов, и и иванов, петров петр петрович, петр петрович петров, п п петров'">
+	</div>
 	<textarea id="text_from" class="left" ></textarea> <span id="vsego1" class="vsego"></span> 
-	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left">
+	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left" title="Открыть дополнительное поле для объединений">
 	<div class="left" id="newfield">
 		<textarea class="doptext" id="text_from2" placeholder="Объединение в словосочетания"></textarea>
 		<textarea class="doptext" id="okonch" placeholder="Добавления окончаний"></textarea>
 		<input type="submit" onclick="joinFields();" value="Объединить" data-text="Соединить содержимое в словосочетания">
-		<fieldset><input type="text" name="second_name" id="second_name" placeholder="Фамилия">
-		<input type="text" name="first_name" id="first_name" placeholder="Имя">
-		<input type="text" name="third_name" id="third_name" placeholder="Отчество"><input type="submit" value="Варианты имени" data-text="Предложить все варианты написания имени" onclick="makeNames();"></fieldset>
 	</div>
 	<br style="clear:both">
+
+	<!--скрытое поле-подсказка для манипулирования именами-->
+	<div class="fio-help">
+		<div class="fio-close">х</div>
+		исходный текст:
+		<div class="fio-from">
+			<input type="radio" id="orderfio" name="fio-order" checked>Фамилия Имя Отчество 
+			<input type="radio" id="orderiof" name="fio-order">Имя Отчество Фамилия<br />
+			<input type="radio" id="orderfi" name="fio-order">Фамилия Имя 
+			<input type="radio" id="orderif" name="fio-order">Имя Фамилия<br />
+		</div>
+		получаемый текст:
+		<div class="fio-to">
+			<input type="checkbox" name="famnameotch" id="famnameotch" checked>фамилия имя отчество <br />
+			<input type="checkbox" name="nameotchfam" id="nameotchfam" checked>имя отчество фамилия <br />
+			<input type="checkbox" name="namefam" id="namefam" checked>имя фамилия <br />
+			<input type="checkbox" name="famname" id="famname" checked>фамилия имя<br />
+			<input type="checkbox" name="nofam" id="nofam" checked>и о фамилия<br />
+			<input type="checkbox" name="famno" id="famno" checked>фамилия и о<br />
+			<input type="checkbox" name="nfam" id="nfam" checked>и фамилия<br />
+			<input type="checkbox" name="famn" id="famn" checked>фамилия и 
+		</div>
+		<strong>не будет работать с двойными фамилиями и сложными именами, сорри</strong>
+	</div>
 	<div id="text_to">
 		<span id="text_to_span"></span>
 	</div>
 	<span id="vsego2" class="vsego"></span>
-	<input type="submit" id="" onclick="textToSmall();" value="To small case">
 	<input type="submit" id="" onclick="unique();" value="Удалить повторы">
 	<div><small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 	<small><input type="checkbox" name="emptysplit" id="emptysplit">Разделять по пробелу</small></div>
@@ -134,25 +164,54 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 <script>
 //todo: переделать в одну строчку и разбивать по пробелам
 //потом еще можно сделать возможность забивать сразу несколько имен
-var makeNames = function(){
-	let person = {
-		sName: document.getElementById('second_name').value.toLowerCase(),
-		fName: document.getElementById('first_name').value.toLowerCase(),
-		tName: document.getElementById('third_name').value.toLowerCase(),
-		fInitial: document.getElementById('first_name').value.charAt(0).toLowerCase(),
-		tInitial: document.getElementById('third_name').value.charAt(0).toLowerCase()
+var makeNames = function(personArr){
+	let person = {};
+	if(document.getElementById('orderfio').checked) {
+		person.sName = personArr[0];
+		person.fName = personArr[1];
+		person.tName = personArr[2];
+	}	
+	if(document.getElementById('orderiof').checked) {
+		person.sName = personArr[2];
+		person.fName = personArr[0];
+		person.tName = personArr[1];
 	}
-	let nameVar = person.sName +" "+person.fName +" "+ person.tName + ", " + 
-		person.fName +" "+ person.tName +" " + person.sName + ", " + 
-		person.fName +" "+ person.sName + ", " + 
-		person.fInitial +" "+ person.tInitial +" " + person.sName + ", " + 
-		person.sName + " " + person.fInitial +" "+ person.tInitial +", " + 
-		person.fInitial +" "+ person.sName;
-	document.getElementById('text_to_span').innerHTML = nameVar;
+	if(document.getElementById('orderif').checked) {
+		person.sName = personArr[1];
+		person.fName = personArr[0];
+		person.tName = '';
+	}	
+	if(document.getElementById('orderfi').checked) {
+		person.sName = personArr[0];
+		person.fName = personArr[1];
+		person.tName = '';
+	}
+	person.fInitial= person.fName.charAt(0).toLowerCase();
+	person.tInitial= person.tName.charAt(0).toLowerCase();
+	console.log(person);
+	let nameVar = '';
+		document.getElementById('famnameotch').checked ? nameVar += person.sName +" "+person.fName +" "+ person.tName + ", " : nameVar = nameVar;
+		document.getElementById('nameotchfam').checked ? nameVar += person.fName +" "+ person.tName +" " + person.sName + ", " : nameVar = nameVar; 
+		document.getElementById('namefam').checked ? nameVar += person.fName +" "+ person.sName + ", " : nameVar = nameVar;
+		document.getElementById('famname').checked ? nameVar += person.sName + " "+  person.fName + ", " : nameVar = nameVar;
+		document.getElementById('nofam').checked ? nameVar += person.fInitial +" "+ person.tInitial +" " + person.sName + ", " : nameVar = nameVar;
+		document.getElementById('famno').checked ? nameVar += person.sName + " " + person.fInitial +" "+ person.tInitial +", " : nameVar = nameVar;
+		document.getElementById('nfam').checked ? nameVar += person.fInitial +" "+ person.sName + ", " : nameVar = nameVar;
+		document.getElementById('famn').checked ? nameVar += person.sName +" "+ person.fInitial  : nameVar = nameVar;
 
-	document.getElementById('second_name').value="";
-	document.getElementById('first_name').value="";
-	document.getElementById('third_name').value="";
+	//document.getElementById('text_to_span').innerHTML = nameVar;
+
+	return nameVar;
+}
+
+var splitPersons = function(){
+	let persons = document.getElementById('text_from').value.split(', ');
+	let str = '';
+	for(i = 0; i < persons.length; i++) {
+		str += makeNames(persons[i].split(' '));
+		str += ', ';
+	}
+	document.getElementById('text_to_span').innerHTML = str;
 }
 
 var joinFields = function(){
@@ -196,8 +255,8 @@ var joinFields = function(){
 }
 
 var textToSmall = function () {
-    var text_from = document.getElementById('text_from').value;
-    document.getElementById('text_to_trash').innerHTML = text_from.toLowerCase();
+		let textFrom = document.getElementById('text_from')
+    textFrom.value = textFrom.value.toLowerCase();
 	return false;
 };
 
@@ -309,7 +368,36 @@ function showFrom2(){
 	    	selectText(this);
 	    });
 	});
+
+	//fio interface
+	let fio = document.querySelector('#fio');
+	let fioHelp = document.querySelector('.fio-help');
+	fio.addEventListener('mouseover', function(){
+		//protect from not intended mouseovers
+		let fioswitch = true;
+		fio.addEventListener('mouseleave', function(){ 
+			fioswitch = false; 
+			console.log('false');
+		});
+		//show fio-interface
+		setTimeout(function() { 
+			if(fioswitch) {
+				fioHelp.style.display = 'block'; }
+			}, 1000);
+	});
+	fio.addEventListener('click', splitPersons);
+	//close fio-interface
+	document.querySelector('.fio-close').addEventListener('click', function(){
+		fioHelp.style.display = 'none';
+	})
 }());
+// var info;
+// $('body').mousemove(function(e){
+//   if (info !==e.target){
+//   	console.log(e.target);
+//     info =e.target;
+//   }
+// });
 
 </script>
 </body></html>
