@@ -163,8 +163,6 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 </section>
 
 <script>
-//todo: переделать в одну строчку и разбивать по пробелам
-//потом еще можно сделать возможность забивать сразу несколько имен
 var makeNames = function(personArr){
 	let person = {};
 	if(document.getElementById('orderfio').checked) {
@@ -188,19 +186,36 @@ var makeNames = function(personArr){
 		person.tName = '';
 	}
 	person.fInitial= person.fName.charAt(0).toLowerCase();
-	person.tInitial= person.tName.charAt(0).toLowerCase();
+	if(person.tName.lenght > 0)	{
+		person.tInitial = person.tName.charAt(0).toLowerCase();
+	}
 	console.log(person);
 	let nameVar = '';
-		document.getElementById('famnameotch').checked ? nameVar += person.sName +" "+person.fName +" "+ person.tName + ", " : nameVar = nameVar;
-		document.getElementById('nameotchfam').checked ? nameVar += person.fName +" "+ person.tName +" " + person.sName + ", " : nameVar = nameVar; 
+
+		if(document.getElementById('famnameotch').checked) {
+			console.log('famnameotch');
+			if(person.tName.lenght > 0) {
+					nameVar += person.sName +" "+person.fName +" "+ person.tName + ", ";
+				}
+			else {
+					//if famnameotch is checked then famname is unchecked, 
+					//but we need this variant if we have only name and family name
+					nameVar += person.sName +" "+person.fName + ", ";
+				}
+			}
+		if( document.getElementById('nameotchfam').checked && person.tName.lenght > 0) {
+			nameVar += person.fName +" "+ person.tName +" " + person.sName + ", ";
+			}
 		document.getElementById('namefam').checked ? nameVar += person.fName +" "+ person.sName + ", " : nameVar = nameVar;
 		document.getElementById('famname').checked ? nameVar += person.sName + " "+  person.fName + ", " : nameVar = nameVar;
-		document.getElementById('nofam').checked ? nameVar += person.fInitial +" "+ person.tInitial +" " + person.sName + ", " : nameVar = nameVar;
-		document.getElementById('famno').checked ? nameVar += person.sName + " " + person.fInitial +" "+ person.tInitial +", " : nameVar = nameVar;
+		if(document.getElementById('nofam').checked && person.tName.lenght > 0) {
+			nameVar += person.fInitial +" "+ person.tInitial +" " + person.sName + ", ";
+		}
+		if(document.getElementById('famno').checked && person.tName.lenght > 0) {
+			nameVar += person.sName + " " + person.fInitial +" "+ person.tInitial +", ";
+		}
 		document.getElementById('nfam').checked ? nameVar += person.fInitial +" "+ person.sName + ", " : nameVar = nameVar;
-		document.getElementById('famn').checked ? nameVar += person.sName +" "+ person.fInitial  : nameVar = nameVar;
-
-	//document.getElementById('text_to_span').innerHTML = nameVar;
+		document.getElementById('famn').checked ? nameVar += person.sName +" "+ person.fInitial + ", " : nameVar = nameVar;
 
 	return nameVar;
 }
@@ -210,7 +225,6 @@ var splitPersons = function(){
 	let str = '';
 	for(i = 0; i < persons.length; i++) {
 		str += makeNames(persons[i].split(' '));
-		str += ', ';
 	}
 	document.getElementById('text_to_span').innerHTML = str;
 }
@@ -294,9 +308,7 @@ textReset = function(){
 //разбивает строку 
 function toSplit(n){	
 	var split = ', ';
-	if (document.getElementById('emptysplit').checked == true){
-		split = ' ';
-	}
+	document.getElementById('emptysplit').checked == true ? split = ' ' : split = ', ';
 	if(typeof n != "object"){ n = n.split(split);}
 	return n;
 }
