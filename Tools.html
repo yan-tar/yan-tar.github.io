@@ -68,14 +68,16 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 </head>
 <body>
 <section class="fields">
-	<div class="top-buttons"><input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
-	<input type="submit" onclick="textToSmall();" value="A->a" title="Перевести все в нижний регистр">
-	<input type="submit" id="fio" name="fio" value="ФИО" title="Превратить строку типа 'Иванов Иван Иванович, Петров Петр Петрович' в строку типа 'иванов иван иванович, иван иванович иванов, и и иванов, петров петр петрович, петр петрович петров, п п петров'">
+	<div class="top-buttons">
+		<input type="reset" id="resetTextFrom"  value="Очистить" onclick="textReset();">
+		<input type="submit" onclick="textToSmall();" value="A->a" title="Перевести все в нижний регистр">
+		<input type="submit" id="fio" name="fio" value="ФИО" title="Превратить строку типа 'Иванов Иван Иванович, Петров Петр Петрович' в строку типа 'иванов иван иванович, иван иванович иванов, и и иванов, петров петр петрович, петр петрович петров, п п петров'">		
+		<input type="submit" id="" onclick="unique();" title="Удалить повторы" value="без повторов">
 	</div>
-	<textarea id="text_from" class="left" ></textarea> <span id="vsego1" class="vsego"></span> 
-	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left" title="Открыть дополнительное поле для объединений">
+	<textarea id="text_from" class="left" tabindex="1"></textarea> <span id="vsego1" class="vsego"></span> 
+	<input type="submit" id="" onclick="showFrom2();" value=">>" class="left" title="Открыть дополнительное поле для объединений" tabindex="3">
 	<div class="left" id="newfield">
-		<textarea class="doptext" id="text_from2" placeholder="Объединение в словосочетания"></textarea>
+		<textarea class="doptext" id="text_from2" placeholder="Объединение в словосочетания" tabindex="2"></textarea>
 		<textarea class="doptext" id="okonch" placeholder="Добавления окончаний"></textarea>
 		<input type="submit" onclick="joinFields();" value="Объединить" data-text="Соединить содержимое в словосочетания">
 	</div>
@@ -109,7 +111,6 @@ textarea:focus:-ms-input-placeholder      {color: transparent}
 		<span id="text_to_span"></span>
 	</div>
 	<span id="vsego2" class="vsego"></span>
-	<input type="submit" id="" onclick="unique();" value="Удалить повторы">
 	<div><small><input type="checkbox" name="tosort" id="tosort">Сортировать по алфавиту</small>
 	<small><input type="checkbox" name="emptysplit" id="emptysplit">Разделять по пробелу</small></div>
 	<p><strong>Не забывать про Яндекс Маркет!</strong></p>
@@ -189,12 +190,10 @@ var makeNames = function(personArr){
 	if(person.tName.lenght > 0)	{
 		person.tInitial = person.tName.charAt(0).toLowerCase();
 	}
-	console.log(person);
 	let nameVar = '';
 
 		if(document.getElementById('famnameotch').checked) {
-			console.log('famnameotch');
-			if(person.tName.lenght > 0) {
+			if(person.tName.length > 0) {
 					nameVar += person.sName +" "+person.fName +" "+ person.tName + ", ";
 				}
 			else {
@@ -203,15 +202,15 @@ var makeNames = function(personArr){
 					nameVar += person.sName +" "+person.fName + ", ";
 				}
 			}
-		if( document.getElementById('nameotchfam').checked && person.tName.lenght > 0) {
+		if( document.getElementById('nameotchfam').checked && person.tName.length > 0) {
 			nameVar += person.fName +" "+ person.tName +" " + person.sName + ", ";
 			}
 		document.getElementById('namefam').checked ? nameVar += person.fName +" "+ person.sName + ", " : nameVar = nameVar;
 		document.getElementById('famname').checked ? nameVar += person.sName + " "+  person.fName + ", " : nameVar = nameVar;
-		if(document.getElementById('nofam').checked && person.tName.lenght > 0) {
+		if(document.getElementById('nofam').checked && person.tName.length > 0) {
 			nameVar += person.fInitial +" "+ person.tInitial +" " + person.sName + ", ";
 		}
-		if(document.getElementById('famno').checked && person.tName.lenght > 0) {
+		if(document.getElementById('famno').checked && person.tName.length > 0) {
 			nameVar += person.sName + " " + person.fInitial +" "+ person.tInitial +", ";
 		}
 		document.getElementById('nfam').checked ? nameVar += person.fInitial +" "+ person.sName + ", " : nameVar = nameVar;
