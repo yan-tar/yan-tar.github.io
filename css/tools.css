@@ -1,0 +1,57 @@
+	h2, h3 {color:#b3b3b3;}
+	section  {position:relative;float:left;width:40%;}
+	section.fields {position:relative;width:60%;float:left;}
+	span.comments { color: #777; font-size: 1em; padding-top:40px; display:inline-block;}
+	input {margin-left:10px;}
+	input[type="submit"] {margin-left:0;}
+	textarea {
+		display:block;
+		width:300px; height:100px;
+		margin:0 10px 10px;
+		padding-top:30px;
+		}
+	.doptext {padding-top: 0; }
+	div#text_to {width:300px; height:100px; border:1px solid #b3b3b3; overflow:auto; margin:10px;}
+	#newfield {display:none;}
+	span.vsego { 
+				display: block;
+				position: relative; 
+				top: -35px; left: 320px; 
+				width: 20px; height:20px;
+				color: #777; 
+				font-size: 0.7em; 
+				}
+	#vsego1 {
+		position: absolute;
+		top: 110px;
+	}
+
+	.top-buttons {position:absolute; left:10px;top:5px;}
+	.left {float:left;baseline:top;}
+	.stop-tab h2, .stop-tab h3 {cursor: pointer;}
+	.stop-tab h2::after, .stop-tab h3::after {
+		content:'';
+		display: inline-block;
+		width: 7px; height: 7px;
+		border-bottom: 1px solid blue;
+		border-right: 1px solid blue;
+		margin-left:10px;
+		margin-bottom: 3px;
+		transform: rotate(45deg);
+	}
+	.stop-tab .stopwords {display: none;}
+	.stop-tab--active .stopwords {display: block;}
+	.fio-help {display: none; position: relative; max-width: 400px;  background-color: #ffffaa; }
+	.fio-help, .fio-to, .fio-from { font-size: 0.9em;}
+	.fio-from {margin-bottom: 10px;}
+	.fio-close {position: absolute; right: 5px; top:5px; cursor: pointer; padding: 5px;	}
+
+
+textarea::-webkit-input-placeholder {color:#c0392b;}
+textarea::-moz-placeholder          {color:#c0392b;}/* Firefox 19+ */
+textarea:-moz-placeholder           {color:#c0392b;}/* Firefox 18- */
+textarea:-ms-input-placeholder      {color:#c0392b;}
+textarea:focus::-webkit-input-placeholder {color: transparent;}
+textarea:focus::-moz-placeholder          {color: transparent}
+textarea:focus:-moz-placeholder           {color: transparent}
+textarea:focus:-ms-input-placeholder      {color: transparent}
