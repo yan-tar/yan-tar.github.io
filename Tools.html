@@ -303,7 +303,7 @@ function toSplit(n){
 
 //сортирует по алфавиту, если нужна сортировка
 function toSort(n){
-	let n = toSplit(n);
+	n = toSplit(n);
 	if (document.getElementById('tosort').checked == true) 	{ n.sort();	}
 	return n;
 }
